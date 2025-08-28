@@ -64,10 +64,11 @@
   </style>
 </head>
 <body>
-  <form class="ticket-form" id="ticketForm">
+  <form class="form-control bg-transparent border-light text-white mb-3" id="ticketForm">
     <h2>🎟 Buy Your Ticket</h2>
 
-    <label for="ticketType">Ticket Type</label>
+   <div class="d-flex justify-content-between align-items-center border border-light rounded p-3 text-white mb-4"">
+     <label for="ticketType">Ticket Type</label>
     <select id="ticketType" required>
       <option value="">-- Select --</option>
       <option value="regular">REGULAR - ₦5,000</option>
@@ -93,9 +94,10 @@
     <label for="phone">Phone</label>
     <input type="text" id="phone" required>
     
+   </div>
     <div class="price-box" id="priceBox">Total Price: ₦0</div>
     <br />
-    <button type="submit">Proceed to Pay</button>
+    <button type="submit"  class="btn btn-primary Purchase w-100 fw-bold py-2 mt-2">Proceed to Pay</button>
   </form>
 
   <script>
@@ -169,12 +171,13 @@
         }
 
         // 3️⃣ Initialize Payment
-        let payRes = await fetch(`http://localhost:8080/api/ticket/initialize-payment/`, {
+        let payRes = await fetch(`https://ticketing-2x61.onrender.com/api/ticket/initialize-payment/`, {
         // let payRes = await fetch(`http://localhost:8080/api/ticket/${ticketId}/initialize-payment/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ticket_id: ticketId,
+            // local_reference: payData ? payData.reference : null,
             email: email
           })
         });
@@ -189,35 +192,37 @@
         }
 
         // 4️⃣ Open Monnify Payment
-        MonnifySDK.initialize({
-          amount:  payData.amount, 
+       MonnifySDK.initialize({
+          amount: Number(payData.amount), // ensure number
           currency: "NGN",
-          reference: payData.reference,
+          reference: payData.reference, // unique per transaction
           customerFullName: payData.customerName,
           customerEmail: payData.customerEmail,
-          customerPhone: payData.customerPhone,
-          redirectUrl: payData.redirectUrl,
-        //   paymentFailedRedirectUrl: payData.paymentFailedRedirectUrl,
-          apiKey: "MK_TEST_VZ3SL4J3A5",   // replace
-          contractCode: "4216477966",  // replace
+          customerPhone: payData.customerPhone || "08000000000",
+          apiKey: "MK_TEST_VZ3SL4J3A5",   // must be PUBLIC KEY
+          contractCode: "4216477966",
           paymentDescription: "Event Ticket Purchase",
-          isTestMode: true, // set false in production
+          isTestMode: true,
           metadata: {
-              ticket_id: ticketId,
-              ticketType: ticketType,
-              quantity: quantity
+            ticket_id: ticketId,
+            ticketType: ticketType,
+            quantity: quantity,
           },
-          onComplete: (res) => {
-            if (res.status === "PAID") {
-              alert("✅ Payment Successful! Ticket will be emailed.");
-            } else {
-              alert("❌ Payment Failed or Cancelled");
-            }
-            console.log(res.status);
+          onLoadStart: () => {
+            console.log("Monnify popup loading...");
           },
-          onClose: () => console.log("Payment closed")
+          onLoadComplete: () => {
+            console.log("Monnify popup loaded.");
+          },
+          onComplete: function(response) {
+            console.log("Transaction completed: ", response);
+            // here response.paymentReference is the correct one to use
+          },
+          onClose: function(data) {
+            console.log("Payment closed: ", data);
+          }
         });
-        // console.log(res.status);
+
 
       } catch (err) {
         console.error(err);
