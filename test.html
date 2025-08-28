@@ -64,10 +64,11 @@
   </style>
 </head>
 <body>
-  <form class="ticket-form" id="ticketForm">
+  <form class="form-control bg-transparent border-light text-white mb-3" id="ticketForm">
     <h2>🎟 Buy Your Ticket</h2>
 
-    <label for="ticketType">Ticket Type</label>
+   <div class="d-flex justify-content-between align-items-center border border-light rounded p-3 text-white mb-4"">
+     <label for="ticketType">Ticket Type</label>
     <select id="ticketType" required>
       <option value="">-- Select --</option>
       <option value="regular">REGULAR - ₦5,000</option>
@@ -93,9 +94,10 @@
     <label for="phone">Phone</label>
     <input type="text" id="phone" required>
     
+   </div>
     <div class="price-box" id="priceBox">Total Price: ₦0</div>
     <br />
-    <button type="submit">Proceed to Pay</button>
+    <button type="submit"  class="btn btn-primary Purchase w-100 fw-bold py-2 mt-2">Proceed to Pay</button>
   </form>
 
   <script>
@@ -169,7 +171,7 @@
         }
 
         // 3️⃣ Initialize Payment
-        let payRes = await fetch(`http://localhost:8080/api/ticket/initialize-payment/`, {
+        let payRes = await fetch(`https://ticketing-2x61.onrender.com/api/ticket/initialize-payment/`, {
         // let payRes = await fetch(`http://localhost:8080/api/ticket/${ticketId}/initialize-payment/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -9,6 +9,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="button.css" />
+  <script src="https://sdk.monnify.com/plugin/monnify.js"></script>
+
 </head>
 <body>
 
@@ -115,12 +117,46 @@
       <div class="ticket-panel p-4 rounded">
         <h4 class="fw-bold text-center mb-4 text-white">Ticket</h4>
 
-        <!-- Pass Type -->
-        <div class="form-control bg-transparent border-light text-white mb-3">
-          Silver Pass
-        </div>
+        <form class="ticket-form" id="ticketForm">
+          <h2>🎟 Buy Your Ticket</h2>
 
-        <!-- Price + Quantity -->
+          <label for="ticketType">Ticket Type</label>
+          <select id="ticketType" required>
+            <option value="">-- Select --</option>
+            <option value="regular">REGULAR - ₦5,000</option>
+            <option value="vip">VIP - ₦50,000</option>
+          </select>
+
+          <label for="quantity">Quantity</label>
+          <input type="number" id="quantity" value="1" min="1" required>
+
+          
+          <label for="firstname">First Name</label>
+          <input type="text" id="firstname" required>
+
+          <label for="lastname">Last Name</label>
+          <input type="text" id="lastname" required>
+      <!-- 
+          <label for="department">Department</label>
+          <input type="text" id="department" required> -->
+
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+          
+          <label for="phone">Phone</label>
+          <input type="text" id="phone" required>
+          
+          <div class="price-box" id="priceBox">Total Price: ₦0</div>
+          <br />
+          <button type="submit">Proceed to Pay</button>
+        </form>
+
+        <!-- Pass Type -->
+        <!-- <div class="form-control bg-transparent border-light text-white mb-3">
+          Silver Pass
+        </div> -->
+
+        <!-- Price + Quantity
         <div class="d-flex justify-content-between align-items-center border border-light rounded p-3 text-white mb-4">
           <div>
             <div class="fs-5 fw-bold">$285.00</div>
@@ -131,16 +167,16 @@
             <span class="fs-5">1</span>
             <button class="btn text-white fs-4 px-2">+</button>
           </div>
-        </div>
+        </div> -->
 
-        <!-- Quantity & Total -->
+        <!-- Quantity & Total
         <div class="mb-3 text-white">
           <div><strong>Quantity:</strong> 01</div>
           <div><strong>Total Cost:</strong> $285.00</div>
         </div>
 
-        <!-- Purchase Button -->
-        <button class="btn btn-primary Purchase w-100 fw-bold py-2 mt-2">PURCHASE NOW</button>
+        -- Purchase Button -->
+        <!-- <button class="btn btn-primary Purchase w-100 fw-bold py-2 mt-2">PURCHASE NOW</button> --> -->
       </div>
     </div>
   </div>
@@ -272,5 +308,136 @@
 </footer>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const ticketPrices = { regular: 5000, vip: 50000 };
+    const ticketTypeEl = document.getElementById("ticketType");
+    const quantityEl = document.getElementById("quantity");
+    const priceBox = document.getElementById("priceBox");
+
+    // Update displayed price dynamically
+    function updatePrice() {
+      let type = ticketTypeEl.value;
+      let qty = parseInt(quantityEl.value || 1);
+      if (type && ticketPrices[type]) {
+        let total = ticketPrices[type] * qty;
+        priceBox.textContent = `Total Price: ₦${total}`;
+      } else {
+        priceBox.textContent = "Total Price: ₦0";
+      }
+    }
+    ticketTypeEl.addEventListener("change", updatePrice);
+    quantityEl.addEventListener("input", updatePrice);
+
+    document.getElementById("ticketForm").addEventListener("submit", async function(e){
+      e.preventDefault();
+
+      let ticketType = ticketTypeEl.value;
+      let quantity = parseInt(quantityEl.value);
+      let firstname = document.getElementById("firstname").value;
+      let lastname = document.getElementById("lastname").value;
+    //   let department = document.getElementById("department").value;
+      let email = document.getElementById("email").value;
+      let phone = document.getElementById("phone").value;
+
+      try {
+        // 1️⃣ Create Ticket
+        let ticketRes = await fetch("http://localhost:8080/api/create-ticket/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ticket_type: ticketType,
+            quantity: quantity,
+            totalPrice: ticketPrices[ticketType] * quantity
+          })
+        });
+
+        let ticketData = await ticketRes.json();
+        if (ticketData.status !== "success") {
+          alert("Error creating ticket: " + JSON.stringify(ticketData));
+          return;
+        }
+        let ticketId = ticketData.ticket_id;   // must be returned from backend
+        let totalPrice = ticketData.total_price;
+
+        // 2️⃣ Add Contact
+        let contactRes = await fetch(`http://localhost:8080/api/ticket/${ticketId}/contact/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstname,
+            lastname,
+            // department,
+            email,
+            phone
+          })
+        });
+
+        let contactData = await contactRes.json();
+        if (!contactData || contactData.error) {
+          alert("Error saving contact: " + JSON.stringify(contactData));
+          return;
+        }
+
+        // 3️⃣ Initialize Payment
+        let payRes = await fetch(`https://ticketing-2x61.onrender.com/api/ticket/initialize-payment/`, {
+        // let payRes = await fetch(`http://localhost:8080/api/ticket/${ticketId}/initialize-payment/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ticket_id: ticketId,
+            // local_reference: payData ? payData.reference : null,
+            email: email
+          })
+        });
+
+        let payData = await payRes.json();
+        console.log(payData);
+        if (payData.error) {
+          alert("Error initializing payment: " + payData.error);
+          console.error(payData);
+          console.log("Payment initialization failed");
+          return;
+        }
+
+        // 4️⃣ Open Monnify Payment
+       MonnifySDK.initialize({
+          amount: Number(payData.amount), // ensure number
+          currency: "NGN",
+          reference: payData.reference, // unique per transaction
+          customerFullName: payData.customerName,
+          customerEmail: payData.customerEmail,
+          customerPhone: payData.customerPhone || "08000000000",
+          apiKey: "MK_TEST_VZ3SL4J3A5",   // must be PUBLIC KEY
+          contractCode: "4216477966",
+          paymentDescription: "Event Ticket Purchase",
+          isTestMode: true,
+          metadata: {
+            ticket_id: ticketId,
+            ticketType: ticketType,
+            quantity: quantity,
+          },
+          onLoadStart: () => {
+            console.log("Monnify popup loading...");
+          },
+          onLoadComplete: () => {
+            console.log("Monnify popup loaded.");
+          },
+          onComplete: function(response) {
+            console.log("Transaction completed: ", response);
+            // here response.paymentReference is the correct one to use
+          },
+          onClose: function(data) {
+            console.log("Payment closed: ", data);
+          }
+        });
+
+
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Check console.");
+      }
+    });
+  </script>
 </body>
 </html>
