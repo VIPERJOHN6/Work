@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daevnt Navbar - Red Black White Theme</title>
+  <title>TEDx - TAU</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="style.css" />
@@ -14,7 +14,7 @@
   <div class="container-fluid px-4">
     <!-- Brand -->
     <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="./images/logo.svg" alt="Logo" style="height: 40px;" />
+      <img src="./images/tau.png" alt="Logo" style="height: 45px; width: 200px;" />
     </a>
 
     <!-- Toggler -->
@@ -27,61 +27,71 @@
       <ul class="navbar-nav">
         <!-- HOME -->
         <li class="nav-item dropdown">
-          <a class="nav-link" href="#">Home</a>
-          <div class="dropdown-hover">
+          <a class="nav-link" href="#">HOME</a>
+          <!-- <div class="dropdown-hover">
             <a href="#">Overview</a>
             <a href="#">Intro</a>
             <a href="#">Highlights</a>
-          </div>
+          </div> -->
         </li>
 
         <!-- PAGES -->
         <li class="nav-item dropdown">
-          <a class="nav-link" href="#">Pages</a>
-          <div class="dropdown-hover">
+          <a class="nav-link" href="#">ABOUT</a>
+          <!-- <div class="dropdown-hover">
             <a href="#">About Us</a>
             <a href="#">Our Team</a>
             <a href="#">Pricing</a>
-          </div>
+          </div> -->
         </li>
 
         <!-- BLOG -->
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link" href="#">Blog</a>
           <div class="dropdown-hover">
             <a href="#">Blog Grid</a>
             <a href="#">Blog Single</a>
             <a href="#">Categories</a>
           </div>
-        </li>
+        </li> -->
 
         <!-- EVENTS -->
         <li class="nav-item dropdown">
-          <a class="nav-link" href="#">Events</a>
-          <div class="dropdown-hover">
+          <a class="nav-link" href="#">EVENTS</a>
+          <!-- <div class="dropdown-hover">
             <a href="#">Event</a>
             <a href="#">Event Grid</a>
             <a href="#">Event Details</a>
-          </div>
+          </div> -->
         </li>
 
         <!-- CONTACT -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="#">Contact</a>
-          <div class="dropdown-hover">
-            <a href="#">Contact Form</a>
-            <a href="#">Support</a>
-            <a href="#">Location</a>
-          </div>
-        </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#">TICKET</a>
+            <!-- <div class="dropdown-hover">
+              <a href="#">Contact Form</a>
+              <a href="#">Support</a>
+              <a href="#">Location</a>
+            </div> -->
+          </li>
+        <!-- Volunteer -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#">VOLUNTEER</a>
+            <!-- <div class="dropdown-hover">
+              <a href="#">Contact Form</a>
+              <a href="#">Support</a>
+              <a href="#">Location</a>
+            </div> -->
+          </li>
       </ul>
+      <!-- Right Side Icons -->
+      <div class="d-flex align-items-center right-icons">
+        <!-- <i class="fas fa-th menu-icon"></i> -->
+        <a class="btn get-ticket-btn" href="test.html">GET TICKET</a>
+      </div>
+      <div></div>
     </div>
 
-    <!-- Right Side Icons -->
-    <div class="d-flex align-items-center">
-      <i class="fas fa-th menu-icon"></i>
-      <a class="btn get-ticket-btn" href="#">GET TICKET</a>
-    </div>
   </div>
 </nav>
 
@@ -125,7 +135,11 @@
 </div>
 
 <div class="top-bar">
-  <div>Social: FB . IN . TW . DR</div>
+  <div>Social: IN . 
+    <i class="fa-brands fa-instagram"></i>  
+ <!-- <i class="fa-brands fa-twitter" aria-hidden="true"></i> -->
+   <!-- <i class="fa fa-dribbble" aria-hidden="true"></i> -->
+  </div>
   <div>+1–416–8241228</div>
   <div>Info@daevnt.org.world</div>
 </div>
@@ -252,7 +266,7 @@
     <button class="buy-ticket-btn">BUY TICKET</button>
   </article>
 
-  <article class="event-item">
+  <!-- <article class="event-item">
     <img src="./images/future-events-2.png" alt="Cybersecurity Protecting Data & Privacy" />
     <div class="event-info">
       <h2>Cybersecurity Protecting Data & Privacy</h2>
@@ -279,18 +293,22 @@
       <div><span class="dot"></span> 10:00 AM – 12:00 PM</div>
     </div>
     <button class="buy-ticket-btn">BUY TICKET</button>
-  </article>
+  </article> -->
   
 </section>
 
 <section class="video-section">
   <div class="video-wrapper">
     <img
-      src="./images/news-3.png"
+      src="./images/student_speaker.png"
       alt="Conference"
       class="video-bg"
     />
-    <button class="play-video-btn" aria-label="Play video">PLAY VIDEO</button>
+    <a href="https://bit.ly/4mLC8yj" class="buy-ticket-btn" target="_blank" rel="noopener noreferrer">
+
+      <button class="buy-ticket-btn">Visit</button>
+    </a>
+      
   </div>
 </section>
 <div class="speaker-section">
