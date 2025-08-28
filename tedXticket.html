@@ -341,7 +341,7 @@
 
       try {
         // 1️⃣ Create Ticket
-        let ticketRes = await fetch("http://localhost:8080/api/create-ticket/", {
+        let ticketRes = await fetch("https://ticketing-2x61.onrender.com/api/create-ticket/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -360,7 +360,7 @@
         let totalPrice = ticketData.total_price;
 
         // 2️⃣ Add Contact
-        let contactRes = await fetch(`http://localhost:8080/api/ticket/${ticketId}/contact/`, {
+        let contactRes = await fetch(`https://ticketing-2x61.onrender.com/api/ticket/${ticketId}/contact/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -379,7 +379,7 @@
         }
 
         // 3️⃣ Initialize Payment
-        let payRes = await fetch(`http://localhost:8080/api/ticket/initialize-payment/`, {
+        let payRes = await fetch(`https://ticketing-2x61.onrender.com/api/ticket/initialize-payment/`, {
         // let payRes = await fetch(`http://localhost:8080/api/ticket/${ticketId}/initialize-payment/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
