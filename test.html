@@ -175,6 +175,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ticket_id: ticketId,
+            // local_reference: payData ? payData.reference : null,
             email: email
           })
         });
@@ -189,35 +190,37 @@
         }
 
         // 4️⃣ Open Monnify Payment
-        MonnifySDK.initialize({
-          amount:  payData.amount, 
+       MonnifySDK.initialize({
+          amount: Number(payData.amount), // ensure number
           currency: "NGN",
-          reference: payData.reference,
+          reference: payData.reference, // unique per transaction
           customerFullName: payData.customerName,
           customerEmail: payData.customerEmail,
-          customerPhone: payData.customerPhone,
-          redirectUrl: payData.redirectUrl,
-        //   paymentFailedRedirectUrl: payData.paymentFailedRedirectUrl,
-          apiKey: "MK_TEST_VZ3SL4J3A5",   // replace
-          contractCode: "4216477966",  // replace
+          customerPhone: payData.customerPhone || "08000000000",
+          apiKey: "MK_TEST_VZ3SL4J3A5",   // must be PUBLIC KEY
+          contractCode: "4216477966",
           paymentDescription: "Event Ticket Purchase",
-          isTestMode: true, // set false in production
+          isTestMode: true,
           metadata: {
-              ticket_id: ticketId,
-              ticketType: ticketType,
-              quantity: quantity
+            ticket_id: ticketId,
+            ticketType: ticketType,
+            quantity: quantity,
           },
-          onComplete: (res) => {
-            if (res.status === "PAID") {
-              alert("✅ Payment Successful! Ticket will be emailed.");
-            } else {
-              alert("❌ Payment Failed or Cancelled");
-            }
-            console.log(res.status);
+          onLoadStart: () => {
+            console.log("Monnify popup loading...");
           },
-          onClose: () => console.log("Payment closed")
+          onLoadComplete: () => {
+            console.log("Monnify popup loaded.");
+          },
+          onComplete: function(response) {
+            console.log("Transaction completed: ", response);
+            // here response.paymentReference is the correct one to use
+          },
+          onClose: function(data) {
+            console.log("Payment closed: ", data);
+          }
         });
-        // console.log(res.status);
+
 
       } catch (err) {
         console.error(err);
