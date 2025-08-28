@@ -122,7 +122,7 @@ justify-content: space-between;
 .top-bar {
   display: flex;
   width: 100%;
-  background: linear-gradient(90deg, #c83b3b 0%, #d4b6ff 50%, #dba9b1 100%);
+  background: linear-gradient(90deg, #c83b3b 0%, #ffb6b6 50%, #dba9a9 100%);
   color: black;
   font-family: Arial, sans-serif;
   font-weight: 500;

@@ -1,0 +1,221 @@
+/* Base */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #c83b3b;
+  color: white;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.04);
+  /* border-radius: 16px; */
+  backdrop-filter: blur(13.7px);
+  -webkit-backdrop-filter: blur(13.7px);
+}
+
+.navbar .nav-link {
+  color: white;
+  font-weight: 500;
+  padding: 12px 16px;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #ff3c3c;
+}
+
+/* GET TICKET Button */
+.get-ticket-btn {
+  background-color: #ff3c3c;
+  color: white;
+  font-weight: bold;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.get-ticket-btn:hover {
+  background-color: #ff3c3c;
+}
+
+/* Responsive nav tweaks */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    text-align: center;
+  }
+
+  .get-ticket-btn {
+    margin-top: 10px;
+  }
+}
+
+/* Ticket Panel */
+.ticket-panel {
+  background-color: #c83b3b;
+  color: white;
+  border-radius: 12px;
+}
+
+/* Quantity Controls */
+.ticket-panel button {
+  background: transparent;
+  border: none;
+  font-weight: bold;
+}
+
+.ticket-panel .form-control {
+  background-color: transparent;
+  border: 1px solid #ccc;
+}
+
+/* Responsive padding fix */
+@media (max-width: 767px) {
+  .ticket-panel {
+    margin-top: 30px;
+  }
+}
+
+.btn-primary {
+  background-color: #ff3c3c !important;
+}
+
+.btn-primar {
+  background-color: #ff3c3c !important;
+  color: white !important;
+  padding: 1%;
+}
+
+/* Creative Section */
+.creative-section {
+  background-color: #0d0d0d;
+  color: white;
+  text-align: center;
+  width: 100%;
+  padding: 60px 20px;
+  box-sizing: border-box;
+}
+
+.creative-section .subtitle {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.creative-section .title {
+  font-weight: 900;
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.creative-section .title .highlight {
+  color: #ff3c3c;
+}
+
+.creative-section .description {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 32px;
+}
+
+.creative-section .button-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.creative-section .btn-read-more {
+  background-color: #ff3c3c;
+  border: none;
+  color: white;
+  padding: 14px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.creative-section .btn-read-more:hover {
+  background-color: #c83b3b;
+}
+
+.creative-section .contact {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.creative-section .contact-icon {
+  background-color: white;
+  color: #5e46ff;
+  border-radius: 50%;
+  padding: 10px;
+  margin-right: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  user-select: none;
+}
+
+/* .container {
+  display: flex;
+  max-width: 1200px;
+  margin: 40px auto;
+  gap: 40px;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+} */
+
+/* Container */
+section.py-5.text-center {
+  background-color: #6a42f4;
+  color: white;
+  padding: 3rem 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Row: center items horizontally */
+section.py-5.text-center .row {
+  justify-content: center;
+}
+
+/* Each statistic box */
+section.py-5.text-center .col-md-2 {
+  margin: 0 1.5rem;
+  min-width: 150px;
+}
+
+/* Numbers */
+section.py-5.text-center h1.fw-bold {
+  font-weight: 700;
+  font-size: 3.5rem; /* Large and bold */
+  margin-bottom: 0.3rem;
+}
+
+/* Description text */
+section.py-5.text-center p {
+  font-weight: 400;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+
