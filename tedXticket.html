@@ -29,12 +29,12 @@
 
     <!-- Nav Links -->
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav mx-auto">
+      <ul class="navbar-nav ms-auto me-2">
         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Pages</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Events</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Tickets</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Volunteer</a></li>
       </ul>
 
       <!-- Icons + Button -->
@@ -111,45 +111,41 @@
       </div>
     </div>
 
-    <!-- RIGHT: Ticket Panel -->
-    <div class="col-lg-4 col-md-8">
-      <div class="ticket-panel p-4 rounded">
-        <h4 class="fw-bold text-center mb-4 text-white">Ticket</h4>
+<div class="ticket-panel">
+  <h4>🎟️ Buy Your Ticket</h4>
+  <form>
+    <label for="ticket-type">Ticket Type</label>
+    <select id="ticket-type" name="ticket-type" required>
+      <option value="" disabled selected>-- Select --</option>
+      <option value="silver">Silver Pass</option>
+      <option value="gold">Gold Pass</option>
+    </select>
 
-        <form class="ticket-form" id="ticketForm">
-          <h2>🎟 Buy Your Ticket</h2>
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
 
-          <label for="ticketType">Ticket Type</label>
-          <select id="ticketType" required class="form-control bg-transparent border-light text-white mb-3">
+    <div class="name-row">
+      <div>
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="first-name" required>
+      </div>
+      <div>
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="last-name" required>
+      </div>
+    </div>
 
-            <option value="">-- Select --</option>
-            <option value="regular">REGULAR - ₦5,000</option>
-            <option value="vip">VIP - ₦50,000</option>
-          </select>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
 
-          <label for="quantity">Quantity</label>
-          <input type="number" id="quantity" value="1" min="1" required>
+    <label for="phone">Phone</label>
+    <input type="tel" id="phone" name="phone" required>
 
-          
-          <label for="firstname">First Name</label>
-          <input type="text" id="firstname" required>
+    <div class="total-price">Total Price: ₦0</div>
 
-          <label for="lastname">Last Name</label>
-          <input type="text" id="lastname" required>
-      <!-- 
-          <label for="department">Department</label>
-          <input type="text" id="department" required> -->
-
-          <label for="email">Email</label>
-          <input type="email" id="email" required>
-          
-          <label for="phone">Phone</label>
-          <input type="text" id="phone" required>
-          
-          <div class="price-box" id="priceBox">Total Price: ₦0</div>
-          <br />
-          <button type="submit">Proceed to Pay</button>
-        </form>
+    <button type="submit" class="btn-primary">Proceed to Pay</button>
+  </form>
+</div>
 
         <!-- Pass Type -->
         <!-- <div class="form-control bg-transparent border-light text-white mb-3">
@@ -176,7 +172,7 @@
         </div>
 
         -- Purchase Button -->
-        <!-- <button class="btn btn-primary Purchase w-100 fw-bold py-2 mt-2">PURCHASE NOW</button> --> -->
+        <!-- <button class="btn btn-primary Purchase w-100 fw-bold py-2 mt-2">PURCHASE NOW</button> -->
       </div>
     </div>
   </div>
@@ -223,7 +219,7 @@
         Lorem Ipsum is a premier conference bringing together AI pioneers, researchers, and industry leaders to explore the cutting-edge advancements in artificial intelligence. It’s a place to learn, network, and inspire the future of technology.
       </p>
     </div>
-    <!-- <button class=" btn-primar">ADD TO CALENDER</button> -->
+      <button class="btn btn-primary custom-btn">ADD TO CALENDER</button>
   </div>
 
 
