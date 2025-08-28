@@ -97,7 +97,7 @@ body {
 
 /* Creative Section */
 .creative-section {
-  background-color: #0d0d0d;
+  /* background-color: #c83b3b; */
   color: white;
   text-align: center;
   width: 100%;
@@ -221,3 +221,6 @@ section.py-5.text-center p {
 }
 
 
+.custom-btn{
+  border-color: #c83b3b;
+}
