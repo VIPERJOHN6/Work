@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEDx - TAU</title>
+
+  <!-- Bootstrap + Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="event.css" />
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <div class="container-fluid px-4">
+      <!-- Brand Logo -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="./images/tau.png" alt="Logo" style="height: 40px; width: 100%;" class="me-2" />
+      </a>
+
+      <!-- Toggler for mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto pe-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="event.html">Events</a></li>
+          <li class="nav-item"><a class="nav-link" href="ticket.html">Tickets</a></li>
+          <li class="nav-item"><a class="nav-link" href="volunteer.html">Volunteers</a></li>
+        </ul>
+
+        <!-- Icons + Button -->
+        <div class="d-flex align-items-center gap-3">
+          <i class="fas fa-th text-white fs-5"></i>
+          <a class="btn get-ticket-btn" href="test.html">GET TICKET</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section text-white text-center py-5">
+    <div class="container mt-5 pt-4 position-relative z-2">
+      <h1 class="fw-bold display-3 mb-3">EVENT LIST</h1>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb justify-content-center mb-0">
+          <li class="breadcrumb-item"><a href="index.html" class="text-white text-decoration-none opacity-50">Home</a></li>
+          <li class="breadcrumb-item text-white opacity-50">/</li>
+          <li class="breadcrumb-item active text-white opacity-50" aria-current="page"><a href="event.html" class="text-white text-decoration-none">Event List</a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Future Events Section -->
+  <section class="future-events">
+    <header class="events-header d-flex justify-content-between align-items-center px-3 py-2">
+      <h1>Future Events</h1>
+      <a href="#" class="view-all">VIEW ALL</a>
+    </header>
+
+    <article class="event-item">
+      <img src="./images/future-events-1.png" alt="The Future of AI Trends & Innovations" />
+      <div class="event-info">
+        <h2>The Future of AI Trends & Innovations</h2>
+        <p><strong>Location:</strong> Main Auditorium, TechHub Conference Center</p>
+      </div>
+      <div class="event-date-time">
+        <div><strong>DATE</strong></div>
+        <div>MARCH 15, 2025</div>
+        <div><strong>TIME</strong></div>
+        <div><span class="dot"></span> 10:00 AM – 12:00 PM</div>
+      </div>
+      <button type="button" class="btn buy-ticket-btn" onclick="window.location.href='tedXticket.html'">BUY TICKET</button>
+    </article>
+
+    <!-- Uncomment to add more events
+    <article class="event-item">
+      <img src="./images/future-events-2.png" alt="Cybersecurity: Protecting Data & Privacy" />
+      <div class="event-info">
+        <h2>Cybersecurity: Protecting Data & Privacy</h2>
+        <p><strong>Location:</strong> Main Auditorium, TechHub Conference Center</p>
+      </div>
+      <div class="event-date-time">
+        <div><strong>DATE</strong></div>
+        <div>MARCH 15, 2025</div>
+        <div><strong>TIME</strong></div>
+        <div><span class="dot"></span> 10:00 AM – 12:00 PM</div>
+      </div>
+      <button class="buy-ticket-btn">BUY TICKET</button>
+    </article>
+    -->
+  </section>
+
+  <!-- Footer -->
+  <footer style="background: radial-gradient(circle at right, #c83b3b, #333); color: white;" class="py-4 mt-5">
+    <div class="container d-flex flex-wrap justify-content-between">
+      <div>
+        <div class="footer-logo mb-2">
+          <img src="./images/tau.png" alt="Event Logo" class="w-50" />
+        </div>
+        <p class="footer-description">
+          Pellentesque nec tempor sapien. Pellentesque vel placerat nibh. Suspendisse venenatis.
+        </p>
+        <form class="subscribe-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
+          <input type="email" placeholder="Enter Your Email Address" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="footer-links">
+        <h5>Useful Links</h5>
+        <ul>
+          <li><a href="#">About Events</a></li>
+          <li><a href="#">Future Events</a></li>
+          <li><a href="#">Top Speakers</a></li>
+          <li><a href="#">FAQ Pages</a></li>
+          <li><a href="#">Get Ticket</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h5>Address:</h5>
+        <p>612-7 Roanoke Rd, Toronto,<br />ON M3A 1E3, Canada</p>
+        <p><strong>Phone:</strong> +1-416-8241228</p>
+        <p><strong>Email:</strong> info@email.com</p>
+      </div>
+    </div>
+
+    <button class="back-to-top" aria-label="Back to top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+      &uarr;
+    </button>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
