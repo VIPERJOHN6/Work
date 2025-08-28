@@ -91,6 +91,8 @@ body {
   background-color: #ff3c3c !important;
   color: white !important;
   padding: 1%;
+  border: #ff3c3c;
+  border-radius: 10%;
 }
 
 /* Creative Section */

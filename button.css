@@ -97,15 +97,33 @@ body {
     margin-top: 30px;
   }
 }
-.btn-primary {
+/* .btn-primary {
     background-color: #ff3c3c !important;
-}
+} */
 
-.btn-primar {
+/* .btn-primar {
     background-color: #ff3c3c !important;
     color: white !important;
     padding: 1%;
+} */
+
+/* .custom-btn {
+  background-color: #c83b3b !important; /* red color */
+  /* color: white;
+  padding: 12px 40px !important;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  border-radius: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease !important;
+} */
+
+.custom-btn:hover {
+  background-color: #a63131; /* slightly darker red on hover */
 }
+
 
 .event-section{
       background: radial-gradient(circle at top right, #333, #c83b3b);

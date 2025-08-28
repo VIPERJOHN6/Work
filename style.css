@@ -510,7 +510,7 @@ justify-content: space-between;
     height: auto;
   }
 }
-  .video-section {
+  /* .video-section {
     position: relative;
     overflow: hidden;
   }
@@ -540,7 +540,7 @@ justify-content: space-between;
   .play-video-btn:focus {
     background: rgba(255 255 255 / 0.9);
     outline: none;
-  }
+  } */
 /* Existing styles unchanged */
 
 .speaker-section {
