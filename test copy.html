@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy Ticket</title>
+  <script src="https://sdk.monnify.com/plugin/monnify.js"></script>
+  <link rel="stylesheet" href="test-copy.css">
+</head>
+<body>
+  <form class="ticket-form" id="ticketForm">
+    <h2>🎟 Buy Your Ticket</h2>
+
+    <label for="ticketType">Ticket Type</label>
+    <select id="ticketType" required>
+      <option value="">-- Select --</option>
+      <option value="regular">REGULAR - ₦5,000</option>
+      <option value="vip">VIP - ₦50,000</option>
+    </select>
+
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" value="1" min="1" required>
+
+    
+    <label for="firstname">First Name</label>
+    <input type="text" id="firstname" required>
+
+    <label for="lastname">Last Name</label>
+    <input type="text" id="lastname" required>
+<!-- 
+    <label for="department">Department</label>
+    <input type="text" id="department" required> -->
+
+    <label for="email">Email</label>
+    <input type="email" id="email" required>
+    
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" required>
+    
+    <div class="price-box" id="priceBox">Total Price: ₦0</div>
+    <br />
+    <button type="submit">Proceed to Pay</button>
+  </form>
+
+  <script>
+    const ticketPrices = { regular: 5000, vip: 50000 };
+    const ticketTypeEl = document.getElementById("ticketType");
+    const quantityEl = document.getElementById("quantity");
+    const priceBox = document.getElementById("priceBox");
+
+    // Update displayed price dynamically
+    function updatePrice() {
+      let type = ticketTypeEl.value;
+      let qty = parseInt(quantityEl.value || 1);
+      if (type && ticketPrices[type]) {
+        let total = ticketPrices[type] * qty;
+        priceBox.textContent = `Total Price: ₦${total}`;
+      } else {
+        priceBox.textContent = "Total Price: ₦0";
+      }
+    }
+    ticketTypeEl.addEventListener("change", updatePrice);
+    quantityEl.addEventListener("input", updatePrice);
+
+    document.getElementById("ticketForm").addEventListener("submit", async function(e){
+      // e.preventDefault();
+
+      let ticketType = ticketTypeEl.value;
+      let quantity = parseInt(quantityEl.value);
+      let firstname = document.getElementById("firstname").value;
+      let lastname = document.getElementById("lastname").value;
+    //   let department = document.getElementById("department").value;
+      let email = document.getElementById("email").value;
+      let phone = document.getElementById("phone").value;
+
+      try {
+        // 1️⃣ Create Ticket
+        let ticketRes = await fetch("https://ticketing-2x61.onrender.com//api/create-ticket/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ticket_type: ticketType,
+            quantity: quantity,
+            totalPrice: ticketPrices[ticketType] * quantity
+          })
+        });
+
+        let ticketData = await ticketRes.json();
+        if (ticketData.status !== "success") {
+          alert("Error creating ticket: " + JSON.stringify(ticketData));
+          return;
+        }
+        let ticketId = ticketData.ticket_id;   // must be returned from backend
+        let totalPrice = ticketData.total_price;
+
+        // 2️⃣ Add Contact
+        let contactRes = await fetch(`https://ticketing-2x61.onrender.com/api/ticket/${ticketId}/contact/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            firstname,
+            lastname,
+            // department,
+            email,
+            phone
+          })
+        });
+
+        let contactData = await contactRes.json();
+        if (!contactData || contactData.error) {
+          alert("Error saving contact: " + JSON.stringify(contactData));
+          return;
+        }
+
+        // 3️⃣ Initialize Payment
+        let payRes = await fetch(`https://ticketing-2x61.onrender.com/api/ticket/initialize-payment/`, {
+        // let payRes = await fetch(`https://ticketing-2x61.onrender.com/api/ticket/${ticketId}/initialize-payment/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ticket_id: ticketId,
+            email: email
+          })
+        });
+
+        let payData = await payRes.json();
+        console.log(payData);
+        if (payData.error) {
+          alert("Error initializing payment: " + payData.error);
+          console.error(payData);
+          console.log("Payment initialization failed");
+          return;
+        }
+
+        // 4️⃣ Open Monnify Payment
+        MonnifySDK.initialize({
+          amount:  payData.amount, 
+          currency: "NGN",
+          reference: payData.reference,
+          customerFullName: payData.customerName,
+          customerEmail: payData.customerEmail,
+          customerPhone: payData.customerPhone,
+          redirectUrl: payData.redirectUrl,
+        //   paymentFailedRedirectUrl: payData.paymentFailedRedirectUrl,
+          apiKey: "MK_TEST_VZ3SL4J3A5",   // replace
+          contractCode: "4216477966",  // replace
+          paymentDescription: "Event Ticket Purchase",
+          isTestMode: true, // set false in production
+          metadata: {
+              ticket_id: ticketId,
+              ticketType: ticketType,
+              quantity: quantity
+          },
+          onComplete: (res) => {
+            if (res.status === "PAID") {
+              alert("✅ Payment Successful! Ticket will be emailed.");
+            } else {
+              alert("❌ Payment Failed or Cancelled");
+            }
+          },
+          onClose: () => console.log("Payment closed")
+        });
+
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Check console.");
+      }
+    });
+  </script>
+</body>
+</html>
