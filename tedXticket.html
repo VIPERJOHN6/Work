@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://sdk.monnify.com/plugin/monnify.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TEDx - TAU</title>
@@ -8,7 +9,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="button.css" />
-  <script src="https://sdk.monnify.com/plugin/monnify.js"></script>
 
 </head>
 <body>
@@ -114,24 +114,29 @@
 <div class="ticket-panel">
   <h4>🎟️ Buy Your Ticket</h4>
   <form>
-    <label for="ticket-type">Ticket Type</label>
-    <select id="ticket-type" name="ticket-type" required>
-      <option value="" disabled selected>-- Select --</option>
-      <option value="silver">Silver Pass</option>
-      <option value="gold">Gold Pass</option>
+    <label for="ticketType">Ticket Type</label>
+    <select id="ticketType" name="ticketType" required onchange="showTicketDescription()">
+      <option value="" disabled selected>---  Select  ---</option>
+      <option value="">---  Select  ---</option>
+      <option value="standard">🎓 Standard – ₦5,000</option>
+      <option value="gold">🌟 Gold – ₦10,000</option>
+      <option value="premium">🚀 Premium – ₦15,000</option>
+      <option value="vip">👑 VIP – ₦30,000</option>
     </select>
+    
+    <h4 id="ticketDescription" style=" font-size:14px; color:#333;"></h4>
 
     <label for="quantity">Quantity</label>
-    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+    <input type="number" id="quantity" name="quantity" min="1" value="1" required disabled>
 
     <div class="name-row">
       <div>
-        <label for="first-name">First Name</label>
-        <input type="text" id="first-name" name="first-name" required>
+        <label for="firstname">First Name</label>
+        <input type="text" id="firstname" name="firstname" required>
       </div>
       <div>
-        <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" name="last-name" required>
+        <label for="lastname">Last Name</label>
+        <input type="text" id="lastname" name="lastname" required>
       </div>
     </div>
 
@@ -141,9 +146,9 @@
     <label for="phone">Phone</label>
     <input type="tel" id="phone" name="phone" required>
 
-    <div class="total-price">Total Price: ₦0</div>
+    <div class="price-box" id="priceBox">Total Price: ₦0</div>
 
-    <button type="submit" class="btn-primary">Proceed to Pay</button>
+    <button type="submit" class="btn-primary" id="submitBtn">Proceed to Pay</button>
   </form>
 </div>
 
@@ -305,7 +310,7 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
+<!-- <script>
 
     const ticketPrices = { regular: 5000, vip: 50000 };
     const ticketTypeEl = document.getElementById("ticketType");
@@ -435,6 +440,321 @@
       } catch (err) {
         console.error(err);
         alert("Something went wrong. Check console.");
+      }
+    });
+  </script> -->
+
+
+<script>
+
+
+  function showTicketDescription() {
+    const ticketType = document.getElementById("ticketType").value;
+    const descriptionDiv = document.getElementById("ticketDescription");
+
+    let description = "";
+
+    switch(ticketType) {
+      case "standard":
+        description = `The entry point for students and community members. <br>
+          Admission to all talks <br>
+          Access to networking sessions <br>
+          Complimentary light refreshments`;
+        break;
+      case "gold":
+          description = `A more comfortable experience with a few extras.<br>
+          Everything in Standard<br>
+          Reserved seating for better visibility<br>
+          Lunch served during intermission<br>
+          TEDxTAU-themed stationery`;
+        break;
+      case "premium":
+          description = `For those who want to experience TEDxTAU with more exclusivity.<br>
+          All Gold benefits<br>
+          Official TEDxTAU branded T-shirt<br>
+          Priority seating near the stage<br>`;
+        break;
+      case "vip":
+          description = `An all-access pass with the highest level of recognition.<br>
+          Everything in Premium<br>
+          Complimentary meals & snacks throughout the event<br>
+          Complete souvenir pack<br>
+          Exclusive photo opportunities and private networking with speakers/curators`;
+        break;
+      
+      default:
+        description = "";
+    }
+
+    descriptionDiv.innerHTML = description;
+  }
+
+
+
+
+    // ---------- CONFIG ----------
+    const BASE_URL = "https://ticketing-2x61.onrender.com"; // update if needed
+    const MONNIFY_API_KEY = "MK_TEST_VZ3SL4J3A5"; // replace with your API key
+    const MONNIFY_CONTRACT = "4216477966"; // replace with your contract code
+    // ----------------------------
+
+    const ticketPrices = { standard: 5000, gold: 10000, premium: 15000, vip: 30000 };
+    const ticketTypeEl = document.getElementById("ticketType");
+    const quantityEl = document.getElementById("quantity");
+    const priceBox = document.getElementById("priceBox");
+    const messageEl = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+    const form = document.getElementById("ticketForm");
+
+    // Format NGN nicely
+    const formatNaira = n => new Intl.NumberFormat('en-NG').format(n || 0);
+
+    // update displayed price
+    function updatePrice() {
+      const type = ticketTypeEl.value;
+      const qty = Math.max(1, parseInt(quantityEl.value || 1));
+      if (type && ticketPrices[type]) {
+        const total = ticketPrices[type] * qty;
+        priceBox.textContent = `Total Price: ₦${formatNaira(total)}`;
+      } else {
+        priceBox.textContent = "Total Price: ₦0";
+      }
+    }
+
+    ticketTypeEl.addEventListener("change", updatePrice);
+    quantityEl.addEventListener("input", updatePrice);
+    // run once on load
+    updatePrice();
+
+    // Helper to safe-parse JSON or return text
+    async function safeParseResponse(res) {
+      const text = await res.text();
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        return { __raw: text };
+      }
+    }
+
+    // Helper to show messages to user
+    function showMessage(text, isError = false) {
+      messageEl.textContent = text;
+      messageEl.style.color = isError ? "#C62828" : "#2E7D32";
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      showMessage("");
+      // basic client validation
+      if (!ticketTypeEl.value) { showMessage("Please select a ticket type.", true); ticketTypeEl.focus(); return; }
+      if (!quantityEl.value || parseInt(quantityEl.value) < 1) { showMessage("Quantity must be at least 1.", true); quantityEl.focus(); return; }
+      if (!document.getElementById("firstname").value.trim()) { showMessage("First name is required.", true); return; }
+      if (!document.getElementById("lastname").value.trim()) { showMessage("Last name is required.", true); return; }
+      if (!document.getElementById("email").value.trim()) { showMessage("Email is required.", true); return; }
+      if (!document.getElementById("phone").value.trim()) { showMessage("Phone is required.", true); return; }
+
+      // disable UI
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Processing...";
+
+      // gather values
+      const ticketType = ticketTypeEl.value;
+      const quantity = Math.max(1, parseInt(quantityEl.value || 1));
+      const firstname = document.getElementById("firstname").value.trim();
+      const lastname = document.getElementById("lastname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const computedTotal = (ticketPrices[ticketType] || 0) * quantity;
+
+      try {
+        console.log("Creating ticket...", { ticketType, quantity, computedTotal });
+
+        // 1) Create ticket (send both possible field names to be tolerant)
+        const createRes = await fetch(`${BASE_URL}/api/create-ticket/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ticket_type: ticketType,
+            quantity,
+            totalPrice: computedTotal,
+            total_price: computedTotal
+          })
+        });
+
+        if (!createRes.ok) {
+          const errBody = await safeParseResponse(createRes);
+          console.error("Create ticket non-OK response:", createRes.status, errBody);
+          throw new Error(`Create-ticket failed (status ${createRes.status}): ${JSON.stringify(errBody)}`);
+        }
+
+        const ticketData = await safeParseResponse(createRes);
+        console.log("Create ticket response:", ticketData);
+
+        // Accept common success shapes: { status: 'success', ticket_id: 1 } OR { success: true, ticket_id: ... }
+        const createdOk =
+          (ticketData.status && ticketData.status.toLowerCase() === "success") ||
+          ticketData.success === true ||
+          ticketData.ticket_id;
+
+        if (!createdOk) {
+          throw new Error("Ticket creation returned unexpected payload: " + JSON.stringify(ticketData));
+        }
+
+        const ticketId = ticketData.ticket_id || ticketData.id || ticketData.data?.ticket_id;
+        if (!ticketId) throw new Error("No ticket id returned by create-ticket endpoint.");
+
+        // 2) Save contact
+        console.log("Saving contact for ticket:", ticketId);
+        const contactRes = await fetch(`${BASE_URL}/api/ticket/${ticketId}/contact/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ firstname, lastname, email, phone })
+        });
+
+        if (!contactRes.ok) {
+          const errBody = await safeParseResponse(contactRes);
+          console.error("Contact non-OK response:", contactRes.status, errBody);
+          throw new Error(`Contact saving failed (status ${contactRes.status}): ${JSON.stringify(errBody)}`);
+        }
+        const contactData = await safeParseResponse(contactRes);
+        console.log("Contact response:", contactData);
+        if (contactData.error || contactData.success === false) {
+          throw new Error("Contact saving returned error: " + JSON.stringify(contactData));
+        }
+
+        // 3) Initialize payment
+        console.log("Initializing payment for ticket:", ticketId);
+        // Send the ticket id as body; your backend may expect a different path - this is tolerant
+        const initRes = await fetch(`${BASE_URL}/api/ticket/initialize-payment/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ticket_id: ticketId, email })
+        });
+
+        if (!initRes.ok) {
+          const errBody = await safeParseResponse(initRes);
+          console.error("Init payment non-OK response:", initRes.status, errBody);
+          throw new Error(`Payment initialization failed (status ${initRes.status}): ${JSON.stringify(errBody)}`);
+        }
+
+        const payData = await safeParseResponse(initRes);
+        console.log("Payment init response:", payData);
+
+        // Validate necessary fields exist
+        const amount = payData.amount || payData.data?.amount || computedTotal;
+        const reference = payData.reference || payData.data?.reference || payData.paymentReference || payData.transactionReference;
+        const customerName = payData.customerName || `${firstname} ${lastname}`;
+        const customerEmail = payData.customerEmail || email;
+        const customerPhone = payData.customerPhone || phone;
+        const paymentDescription = payData.paymentDescription || "Event Ticket Purchase";
+        const redirectUrl = payData.redirectUrl || payData.data?.redirectUrl || BASE_URL;
+
+        if (!amount || !reference) {
+          throw new Error("Payment initialization response missing `amount` or `reference`: " + JSON.stringify(payData));
+        }
+
+        showMessage("Opening payment widget...");
+
+        // 4) Open Monnify widget
+        if (typeof MonnifySDK === "undefined") {
+          throw new Error("Monnify SDK is not loaded. Check network / CSP and that https://sdk.monnify.com/plugin/monnify.js is reachable.");
+        }
+
+        // Initialize Monnify - this should open the widget
+        // MonnifySDK.initialize({
+        //   amount: Number(amount),
+        //   currency: "NGN",
+        //   reference: reference,
+        //   customerFullName: customerName,
+        //   customerEmail: customerEmail,
+        //   customerPhone: customerPhone,
+        //   apiKey: MONNIFY_API_KEY,
+        //   contractCode: MONNIFY_CONTRACT || "4216477966",
+        //   paymentDescription: paymentDescription,
+        //   isTestMode: true,
+        //   redirectUrl: redirectUrl,
+        //   metadata: { ticket_id: ticketId, ticketType, quantity },
+        //   onLoadStart: () => {
+        //     console.log("Monnify popup loading...");
+        //   },
+        //   onLoadComplete: () => {
+        //     console.log("Monnify popup loaded.");
+        //   },
+        //   onComplete: function (response) {
+        //     console.log("Monnify onComplete:", response);
+        //     // The SDK sometimes returns a 'status' or paymentReference; check common shapes
+        //     const status = response.status || response.paymentStatus || response.txnStatus;
+        //     if (String(status).toUpperCase() === "PAID" || response.paymentReference || response.transactionReference) {
+        //       alert("✅ Payment Successful! Ticket will be emailed.");
+        //       showMessage("Payment successful. Thank you!");
+        //       // Optionally redirect to success page here
+        //     } else {
+        //       alert("❌ Payment Failed or Cancelled");
+        //       showMessage("Payment was not successful.", true);
+        //     }
+        //     // re-enable button after completion
+        //     submitBtn.disabled = false;
+        //     submitBtn.textContent = "Proceed to Pay";
+        //   },
+        //   onClose: function () {
+        //     console.log("Monnify widget closed by user.");
+        //     showMessage("Payment widget closed.", true);
+        //     submitBtn.disabled = false;
+        //     submitBtn.textContent = "Proceed to Pay";
+        //   }
+        // });
+ MonnifySDK.initialize({
+          amount: Number(payData.amount), // ensure number
+          currency: "NGN",
+          reference: payData.reference, // unique per transaction
+          customerFullName: payData.customerName,
+          customerEmail: payData.customerEmail,
+          customerPhone: payData.customerPhone || "08000000000",
+          apiKey: "MK_TEST_VZ3SL4J3A5",   // must be PUBLIC KEY
+          contractCode: "4216477966",
+          paymentDescription: "Event Ticket Purchase",
+          isTestMode: true,
+          metadata: {
+            ticket_id: ticketId,
+            ticketType: ticketType,
+            quantity: quantity,
+          },
+          onLoadStart: () => {
+            console.log("Monnify popup loading...");
+          },
+          onLoadComplete: () => {
+            console.log("Monnify popup loaded.");
+          },
+          onComplete: (res) => {
+            if (res.paymentStatus === "PAID") {
+              // alert("✅ Payment Successful! Ticket will be emailed.");
+              console.log("Payment Successful! Ticket will be emailed.");
+              // window.location.href = `http://localhost:5500/gpt/payment_success.html`;
+              // window.location.href = `http://localhost:5500/gpt/payment_success.html?ticketId=${ticketId}&paymentReference=${paymentReference}`;
+              window.location.href = `https://ticketing-2x61.onrender.com/ery-Do-Not-Delete/payment_success.html?ticketId=${ticketId}&paymentReference=${customerName}`;
+
+
+            } else {
+              alert("❌ Payment Failed or Cancelled");
+            }
+            // if (res.paymentStatus === "PAID") {
+            //   alert("✅ Payment Successful! Ticket will be emailed.");
+            //   // window.location.href = `http://localhost:8080/api/ticket/${ticketId}/ticket/send-ticket/`;
+            // } else {
+            //   alert("❌ Payment Failed or Cancelled");
+            // }
+          },
+          onClose: function(data) {
+            console.log("Payment closed: ", data);
+          }
+        });
+
+      } catch (err) {
+        console.error("Error flow:", err);
+        showMessage("Something went wrong. Check console for details.", true);
+        alert("Something went wrong. See console (F12) for details.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Proceed to Pay";
       }
     });
   </script>
