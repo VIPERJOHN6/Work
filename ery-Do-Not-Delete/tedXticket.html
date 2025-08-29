@@ -113,7 +113,7 @@
 
 <div class="ticket-panel">
   <h4>🎟️ Buy Your Ticket</h4>
-  <form class="ticket-form" id="ticketForm" novalidate>
+  <form>
     <label for="ticketType">Ticket Type</label>
     <select id="ticketType" name="ticketType" required onchange="showTicketDescription()">
       <option value="" disabled selected>---  Select  ---</option>
@@ -147,8 +147,6 @@
     <input type="tel" id="phone" name="phone" required>
 
     <div class="price-box" id="priceBox">Total Price: ₦0</div>
-    <div class="small" id="message"></div>
-
 
     <button type="submit" class="btn-primary" id="submitBtn">Proceed to Pay</button>
   </form>
@@ -733,7 +731,7 @@
               console.log("Payment Successful! Ticket will be emailed.");
               // window.location.href = `http://localhost:5500/gpt/payment_success.html`;
               // window.location.href = `http://localhost:5500/gpt/payment_success.html?ticketId=${ticketId}&paymentReference=${paymentReference}`;
-              window.location.href = `https://localhost:5501/ery-Do-Not-Delete/payment_success.html?ticketId=${ticketId}&paymentReference=${customerName}`;
+              window.location.href = `https://ticketing-2x61.onrender.com/ery-Do-Not-Delete/payment_success.html?ticketId=${ticketId}&paymentReference=${customerName}`;
 
 
             } else {
