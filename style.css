@@ -419,7 +419,7 @@ justify-content: space-between;
 .future-events .event-item img {
   width: 320px;
   height: 200px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 8px;
   flex-shrink: 0;
 }
