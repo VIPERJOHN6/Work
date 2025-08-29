@@ -116,15 +116,15 @@
   <form class="ticket-form" id="ticketForm" novalidate>
     <label for="ticketType">Ticket Type</label>
     <select id="ticketType" name="ticketType" required onchange="showTicketDescription()">
-      <option value="" disabled selected>---  Select  ---</option>
-      <option value="">---  Select  ---</option>
+      <!-- <option value="" disabled selected>---  Select  ---</option> -->
+      <option value="" selected>---  Select  ---</option>
       <option value="standard">🎓 Standard – ₦5,000</option>
       <option value="gold">🌟 Gold – ₦10,000</option>
       <option value="premium">🚀 Premium – ₦15,000</option>
       <option value="vip">👑 VIP – ₦30,000</option>
     </select>
-    
-    <h4 id="ticketDescription" style=" font-size:14px; color:#333;"></h4>
+
+    <label id="ticketDescription" style="border: 1px solid #eee; padding: 10px; border-radius: 8px;"></label>
 
     <label for="quantity">Quantity</label>
     <input type="number" id="quantity" name="quantity" min="1" value="1" required disabled>
@@ -455,6 +455,10 @@
     const descriptionDiv = document.getElementById("ticketDescription");
 
     let description = "";
+
+    if (descriptionDiv) {
+      descriptionDiv.style.display = ticketType ? "block" : "none";
+    }
 
     switch(ticketType) {
       case "standard":
