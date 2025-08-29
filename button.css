@@ -83,13 +83,19 @@ body {
 }
 /* Container */
 .ticket-panel {
-  background-color: #c83b3b;
+  /* background-color: #c83b3b; */
   color: white;
   border-radius: 12px;
   padding: 30px 25px;
   max-width: 400px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  /* From https://css.glass */
+background: rgba(255, 255, 255, 0.08);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(13.6px);
+-webkit-backdrop-filter: blur(13.6px);
 }
 
 /* Title */
@@ -112,6 +118,7 @@ body {
 
 .ticket-panel select,
 .ticket-panel input[type="text"],
+.ticket-panel input[type="tel"],
 .ticket-panel input[type="email"],
 .ticket-panel input[type="number"] {
   width: 100%;
@@ -142,7 +149,7 @@ body {
 }
 
 /* Total price */
-.ticket-panel .total-price {
+.ticket-panel .price-box {
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 25px;
