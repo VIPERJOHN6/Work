@@ -462,31 +462,48 @@
 
     switch(ticketType) {
       case "standard":
-        description = `The entry point for students and community members. <br>
-          Admission to all talks <br>
-          Access to networking sessions <br>
-          Complimentary light refreshments`;
+          description = `
+            <ul>
+              <li>The entry point for students and community members.</li>
+              <li>Admission to all talks</li>
+              <li>Access to networking sessions</li>
+              <li>Complimentary light refreshments</li>
+            </ul>`;
         break;
       case "gold":
-          description = `A more comfortable experience with a few extras.<br>
-          Everything in Standard<br>
-          Reserved seating for better visibility<br>
-          Lunch served during intermission<br>
-          TEDxTAU-themed stationery`;
+          description = `
+  <ul>
+    <li>A more comfortable experience with a few extras.</li>
+    <li>Everything in Standard</li>
+    <li>Reserved seating for better visibility</li>
+    <li>Lunch served during intermission</li>
+    <li>TEDxTAU-themed stationery</li>
+  </ul>
+`;
         break;
       case "premium":
-          description = `For those who want to experience TEDxTAU with more exclusivity.<br>
-          All Gold benefits<br>
-          TEDxTAU-branded souvenirs<br>
-          Priority seating near the stage<br>`;
-        break;
-      case "vip":
-          description = `An all-access pass with the highest level of recognition.<br>
-          All Premium benefits<br>
-          Complimentary snacks throughout the event<br>
-          Official TEDxTAU branded T-shirt <br>
-          Exclusive photo opportunities and private networking with speakers/curators`;
-        break;
+  description = `
+    <ul>
+      <li>For those who want to experience TEDxTAU with more exclusivity.</li>
+      <li>All Gold benefits</li>
+      <li>TEDxTAU-branded souvenirs</li>
+      <li>Priority seating near the stage</li>
+    </ul>
+  `;
+  break;
+
+case "vip":
+  description = `
+    <ul>
+      <li>An all-access pass with the highest level of recognition.</li>
+      <li>All Premium benefits</li>
+      <li>Complimentary snacks throughout the event</li>
+      <li>Official TEDxTAU branded T-shirt</li>
+      <li>Exclusive photo opportunities and private networking with speakers/curators</li>
+    </ul>
+  `;
+  break;
+
       
       default:
         description = "";
