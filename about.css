@@ -248,6 +248,8 @@ footer {
   color: white;
   padding: 3rem 2rem;
   position: relative;
+  overflow: hidden;
+  bottom: 0;
 }
 
 .footer-logo {
