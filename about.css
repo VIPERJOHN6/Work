@@ -246,7 +246,7 @@ footer {
   background-position: center;
   background-color: #c83b3b;
   color: white;
-  padding: 3rem 2rem;
+  /* padding: 3rem 2rem; */
   position: relative;
   overflow: hidden;
   bottom: 0;

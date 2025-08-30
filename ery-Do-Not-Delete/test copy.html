@@ -318,6 +318,7 @@
             if (res.paymentStatus === "PAID") {
               // alert("✅ Payment Successful! Ticket will be emailed.");
               console.log("Payment Successful! Ticket will be emailed.");
+              
               // window.location.href = `http://localhost:5500/gpt/payment_success.html`;
               // window.location.href = `http://localhost:5500/gpt/payment_success.html?ticketId=${ticketId}&paymentReference=${paymentReference}`;
               window.location.href = `http://localhost:5500/gpt/payment_success.html?ticketId=${ticketId}&paymentReference=${customerName}`;
