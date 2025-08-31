@@ -802,7 +802,7 @@ case "vip":
         // Call send ticket API here
         // const urlParams = new URLSearchParams(window.location.search);
         // const ticketId = urlParams.get("ticketId");
-        const ticketId = res.transactionReference;
+        const ticketId = ticketData.ticket_id;
 
         if (!ticketId) {
           Swal.update({
@@ -833,7 +833,7 @@ case "vip":
     }).then(() => {
       // Redirect after closing
       window.location.href = "/Work";
-      
+
     });
   }
 
