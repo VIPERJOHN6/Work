@@ -767,25 +767,74 @@ case "vip":
             console.log("Monnify popup loaded.");
           },
           onComplete: (res) => {
-            if (res.paymentStatus === "PAID") {
-              // alert("✅ Payment Successful! Ticket will be emailed.");
-              console.log("Payment Successful! Ticket will be emailed.");
-              // window.location.href = `http://localhost:5500/gpt/payment_success.html`;
-              // window.location.href = `http://localhost:5500/gpt/payment_success.html?ticketId=${ticketId}&paymentReference=${paymentReference}`;
-              // window.location.href = `https://localhost:5501/ery-Do-Not-Delete/payment_success.html?ticketId=${ticketId}&paymentReference=${customerName}`;
-              window.location.href = `https://ery-001.github.io/tedXtau-payment_success/payment_success.html?ticketId=${ticketId}&paymentReference=${customerName}`;
-              // window.location.href = `${BASE_URL}/api/ticket/${ticketId}/ticket/send-ticket/`;
-
-
-            } else {
-              alert("❌ Payment Failed or Cancelled");
-            }
             // if (res.paymentStatus === "PAID") {
+            //   // alert("✅ Payment Successful! Ticket will be emailed.");
+            //   console.log("Payment Successful! Ticket will be emailed.");
+            //   // window.location.href = `http://localhost:5500/gpt/payment_success.html`;
+            //   // window.location.href = `http://localhost:5500/gpt/payment_success.html?ticketId=${ticketId}&paymentReference=${paymentReference}`;
+            //   // window.location.href = `https://localhost:5501/ery-Do-Not-Delete/payment_success.html?ticketId=${ticketId}&paymentReference=${customerName}`;
+            //   window.location.href = `https://ery-001.github.io/tedXtau-payment_success/payment_success.html?ticketId=${ticketId}&paymentReference=${customerName}`;
+            //   // window.location.href = `${BASE_URL}/api/ticket/${ticketId}/ticket/send-ticket/`;
+
+
+            // } else {
+            //   alert("❌ Payment Failed or Cancelled");
+            // }
+            // // if (res.paymentStatus === "PAID") {
             //   alert("✅ Payment Successful! Ticket will be emailed.");
             //   // window.location.href = `http://localhost:8080/api/ticket/${ticketId}/ticket/send-ticket/`;
             // } else {
             //   alert("❌ Payment Failed or Cancelled");
             // }
+            if (res.paymentStatus === "PAID") {
+    Swal.fire({
+      title: '✅ Payment Successful!',
+      html: `
+        <p>Your ticket is being generated and will be sent to your email.</p>
+        <p><b>Processing...</b></p>
+      `,
+      icon: 'success',
+      confirmButtonText: '🏠 Back to Home',
+      confirmButtonColor: '#27ae60',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => {
+        // Call send ticket API here
+        const urlParams = new URLSearchParams(window.location.search);
+        const ticketId = urlParams.get("ticketId");
+
+        if (!ticketId) {
+          Swal.update({
+            html: `<p>❌ Ticket ID missing in URL!</p>`
+          });
+          return;
+        }
+
+        fetch(`https://ticketing-2x61.onrender.com/api/ticket/${ticketId}/ticket/send-ticket/`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              Swal.update({
+                html: `<p>🎟️ Ticket sent to your email!</p>`
+              });
+            } else {
+              Swal.update({
+                html: `<p>❌ Failed to send ticket.</p>`
+              });
+            }
+          })
+          .catch(() => {
+            Swal.update({
+              html: `<p>⚠️ Error contacting server.</p>`
+            });
+          });
+      }
+    }).then(() => {
+      // Redirect after closing
+      window.location.href = "/";
+    });
+  }
+
           },
           onClose: function(data) {
             console.log("Payment closed: ", data);
@@ -801,5 +850,8 @@ case "vip":
       }
     });
   </script>
+  <!-- Add SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>
