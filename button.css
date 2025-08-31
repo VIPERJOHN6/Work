@@ -182,15 +182,42 @@ body {
 /* Speaker Section */
 .speaker-img {
   position: relative;
-  border-radius: 0.25rem;
+  border-radius: 0.75rem; /* smoother corners */
   overflow: hidden;
   cursor: pointer;
+  width: 500px;   /* fixed width */
+  height: 500px;  /* fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f3f3; /* light background while image loads */
 }
 
 .speaker-img img {
   width: 100%;
   display: block;
   border-radius: 0.25rem;
+  transition: transform 0.8s ease;
+  object-fit: cover;
+
+  
+}
+.speaker-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.speaker-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25); /* overlay for effect */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.speaker-img:hover::after {
+  opacity: 1;
 }
 
 .link-icon {
