@@ -787,8 +787,8 @@ case "vip":
             //   alert("❌ Payment Failed or Cancelled");
             // }
             if (res.paymentStatus === "PAID") {
-    Swal.fire({
-      title: '✅ Payment Successful!',
+              Swal.fire({
+                title: '✅ Payment Successful!',
       html: `
         <p>Your ticket is being generated and will be sent to your email.</p>
         <p><b>Processing...</b></p>
@@ -800,8 +800,9 @@ case "vip":
       allowEscapeKey: false,
       didOpen: () => {
         // Call send ticket API here
-        const urlParams = new URLSearchParams(window.location.search);
-        const ticketId = urlParams.get("ticketId");
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const ticketId = urlParams.get("ticketId");
+        const ticketId = res.transactionReference;
 
         if (!ticketId) {
           Swal.update({
