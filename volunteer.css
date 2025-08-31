@@ -143,7 +143,7 @@ body {
 }
 
 .volunteer-cta {
-  background: url('./images/ec8888_b7af8188fa3a46b5bde1a200b28a7f96~mv2.jpeg') no-repeat center center/cover;
+  background: url('./images/Student\ Speaker.png') no-repeat center center/contain;
   position: relative;
   height: 100vh;
   display: flex;
@@ -151,6 +151,7 @@ body {
   align-items: center;
   padding: 0 5%;
   color: white;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .overlay-box {
