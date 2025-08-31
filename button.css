@@ -98,10 +98,10 @@ body {
   -webkit-backdrop-filter: blur(13.6px);
 }
 
-.ticket-panel :hover {
+/* .ticket-panel :hover {
   translate: 0 -5px;
   transition: all 0.7s ease-in-out;
-}
+} */
 
 /* Title */
 .ticket-panel h2 {
