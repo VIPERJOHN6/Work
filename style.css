@@ -16,7 +16,7 @@ body {
   /* From https://css.glass */
 /* From https://css.glass */
 background: rgb(0, 0, 0);
-border-radius: 16px;
+/* border-radius: 16px; */
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(13.7px);
 -webkit-backdrop-filter: blur(13.7px);
@@ -642,6 +642,7 @@ justify-content: space-between;
   font-size: 1rem;
   opacity: 0.8;
   margin-top: 0.15rem;
+  padding-left: 20px;
 }
 
 .link-circle {
@@ -659,12 +660,14 @@ justify-content: space-between;
   cursor: pointer;
   box-shadow: 0 0 15px rgba(111, 66, 193, 0.6);
   transition: background-color 0.3s ease, color 0.3s ease;
+  z-index: 1000;
 }
 
 .link-circle:hover {
   background-color: red;
   color: white;
   text-decoration: none;
+  
 }
 
 /* Responsive */
@@ -675,6 +678,11 @@ justify-content: space-between;
     gap: 2.5rem;
     height: auto;
     padding: 3rem 1.5rem;
+    /* height: 100px; */
+    display: block;
+    align-items: center;
+    width: 100%;
+   
   }
 
   .main-heading {
@@ -684,6 +692,7 @@ justify-content: space-between;
 
   .left-content {
     max-width: 100%;
+    
   }
 
   .right-content {
@@ -703,6 +712,7 @@ justify-content: space-between;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  
   /* flex-wrap: nowrap;
   overflow-x: auto; */
   /* scroll-snap-type: x mandatory; */
@@ -764,10 +774,12 @@ justify-content: space-between;
   .speaker-gallery-large {
     padding: 1.5rem 1.5rem 3rem;
     gap: 1.5rem;
+    display: block;
   }
   .speaker-card-large {
     flex: 0 0 280px;
     height: auto;
+    margin-top: 40px;
   }
 }
 
@@ -775,10 +787,12 @@ justify-content: space-between;
   .speaker-gallery-large {
     gap: 1rem;
     padding: 1rem;
+    display: block;
   }
   .speaker-card-large {
     flex: 0 0 220px;
     height: auto;
+    margin-top: 40px;
   }
 }
 .sponsor-section {
