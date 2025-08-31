@@ -9,6 +9,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="button.css" />
+  <link rel="stylesheet" href="footer.css" />
+
     <link rel="icon" type="image/x-icon" href="images/tau.png">
 
 
@@ -317,7 +319,45 @@
   </button>
 </footer> -->
 
-<div id="footer"></div>
+<footer class="footer" style="width: 100%;">
+  <div class="container d-flex flex-wrap justify-content-between">
+    <div>
+      <div class="footer-logo">
+        <img src="./images/tau.png" alt="TedxTau Logo" class="w-50"/>
+      </div>
+      <p class="footer-description">
+        Uniting Ideas. Inspiring Change.     
+      </p>
+      <!-- <form class="subscribe-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
+        <input type="email" placeholder="Enter Your Email Address" required />
+        <button type="submit">Subscribe</button>
+      </form> -->
+    </div>
+
+    <div class="footer-links">
+      <h5>Useful Links</h5>
+      <ul>
+        <li><a href="/about.html">About Events</a></li>
+        <li><a href="/events.html">Future Events</a></li>
+        <li><a href="/about.html#speak">Top Speakers</a></li>
+        <!-- <li><a href="/faq.html">Faq Pages</a></li> -->
+        <li><a href="/tedXticket.html">Get Ticket</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h5>Address:</h5>
+      <p>Thomas Adewumi University, Oko,<br />Nigeria</p>
+      <p><strong>Phone:</strong> +234 903 889 5084</p>
+      <p><strong>Email:</strong> lily.aimas@tau.edu.ng</p>
+    </div>
+  </div>
+
+  <button class="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    &uarr;
+  </button>
+</footer>
+<!-- <footer id="footer"></footer> -->
 
 <script>
   fetch("components/footer.html")
