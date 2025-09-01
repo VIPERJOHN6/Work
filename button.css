@@ -185,8 +185,8 @@ body {
   border-radius: 0.75rem; /* smoother corners */
   overflow: hidden;
   cursor: pointer;
-  width: 500px;   /* fixed width */
-  height: 500px;  /* fixed height */
+  max-width: 400px;   /* fixed width */
+  max-height: 400px;  /* fixed height */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,8 +199,6 @@ body {
   border-radius: 0.25rem;
   transition: transform 0.8s ease;
   object-fit: cover;
-
-  
 }
 .speaker-img:hover {
   transform: scale(1.05);
@@ -219,6 +217,20 @@ body {
 .speaker-img:hover::after {
   opacity: 1;
 }
+
+/* 
+@media (max-width: 991.98px) {
+  .speaker-img {
+    text-align: center;
+    width: 300px;
+  }
+
+  .get-ticket-btn {
+    margin-top: 10px;
+  }
+} */
+
+
 
 .link-icon {
   position: absolute;
